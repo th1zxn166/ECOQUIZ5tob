@@ -1,0 +1,2839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌍 RECYCLE RANGERS - Edición Épica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ================================================================
+           ESTILOS AVANZADOS - MÁXIMO NIVEL
+           ================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@400;700;900&display=swap');
+
+        :root {
+            --primary: #00ff6a;
+            --primary-glow: rgba(0, 255, 100, 0.5);
+            --secondary: #ffd54f;
+            --secondary-glow: rgba(255, 213, 79, 0.4);
+            --accent: #ff6b6b;
+            --dark: #0a1a0a;
+            --glass: rgba(255, 255, 255, 0.06);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow: hidden;
+            color: #fff;
+            background: #0a0f0a;
+        }
+
+        /* ===== FONDO DINÁMICO CON GRADIENTE VIVO ===== */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(145deg, #0b1a2e 0%, #1a4a3a 35%, #2d6a4a 65%, #1a3a2a 100%);
+        }
+
+        /* ===== ESTRELLAS CON BRILLO ===== */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate ease-in-out;
+        }
+        .star.gold {
+            background: var(--secondary);
+            box-shadow: 0 0 20px var(--secondary-glow);
+        }
+        .star.green {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .star.white {
+            background: #fff;
+        }
+        @keyframes twinkle {
+            0% {
+                opacity: 0.1;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* ===== NUBES ===== */
+        .clouds {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .cloud {
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.04;
+            animation: cloudFloat linear infinite;
+            color: #fff;
+            text-shadow: 0 0 60px rgba(255, 255, 255, 0.1);
+        }
+        @keyframes cloudFloat {
+            0% {
+                transform: translateX(-10vw) translateY(0);
+            }
+            50% {
+                transform: translateX(50vw) translateY(-40px);
+            }
+            100% {
+                transform: translateX(110vw) translateY(0);
+            }
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .game-wrapper {
+            width: 100%;
+            max-width: 920px;
+            height: 96vh;
+            max-height: 780px;
+            background: rgba(10, 15, 10, 0.45);
+            backdrop-filter: blur(28px);
+            border-radius: 48px;
+            border: 2px solid rgba(0, 255, 100, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 0 120px rgba(0, 255, 100, 0.02);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        /* ===== PARTÍCULAS ===== */
+        #particles-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== PANTALLAS ===== */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 16px 18px;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            overflow-y: auto;
+            animation: fadeIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .screen.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ===== BOTONES MODERNOS ===== */
+        .btn {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), #00cc55);
+            color: #0a1f0a;
+            box-shadow: 0 6px 0 #005a2a, 0 8px 24px rgba(0, 255, 100, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 0 #005a2a, 0 12px 40px rgba(0, 255, 100, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #005a2a;
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.14);
+            transform: scale(1.04);
+        }
+        .btn-gold {
+            background: linear-gradient(145deg, var(--secondary), #f9a825);
+            color: #1a2e1f;
+            box-shadow: 0 6px 0 #b47c00, 0 8px 24px rgba(255, 213, 79, 0.2);
+        }
+        .btn-gold:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 0 #b47c00, 0 12px 40px rgba(255, 213, 79, 0.35);
+        }
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 0.8rem;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ================================================================
+           PANTALLA INICIO ÉPICA (MEJORADA AL MÁXIMO)
+           ================================================================ */
+        #home {
+            justify-content: center;
+            text-align: center;
+            gap: 4px;
+            position: relative;
+        }
+
+        /* Aura del héroe */
+        #home .hero-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2px;
+            animation: heroAppear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes heroAppear {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        #home .hero-wrapper .hero-aura {
+            position: absolute;
+            inset: -40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 100, 0.2), transparent 70%);
+            animation: auraPulse 2.5s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+        @keyframes auraPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.6);
+                opacity: 0.9;
+            }
+        }
+        #home .hero-wrapper .hero-aura-gold {
+            position: absolute;
+            inset: -60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 213, 79, 0.1), transparent 70%);
+            animation: auraPulseGold 3s infinite alternate ease-in-out;
+            z-index: 0;
+            animation-delay: 0.5s;
+        }
+        @keyframes auraPulseGold {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1.8);
+                opacity: 0.7;
+            }
+        }
+
+        #home .hero-avatar {
+            font-size: 9rem;
+            display: inline-block;
+            animation: floatHero 3.5s infinite alternate ease-in-out;
+            filter: drop-shadow(0 20px 80px rgba(0, 255, 100, 0.3));
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+            line-height: 1;
+        }
+        #home .hero-avatar:hover {
+            transform: scale(1.1) rotate(-3deg);
+        }
+        @keyframes floatHero {
+            0% {
+                transform: translateY(0) rotate(-4deg) scale(1);
+            }
+            100% {
+                transform: translateY(-35px) rotate(4deg) scale(1.06);
+            }
+        }
+
+        /* Partículas doradas alrededor del héroe */
+        .hero-particles {
+            position: absolute;
+            inset: -80px;
+            pointer-events: none;
+            z-index: 0;
+            overflow: visible;
+        }
+        .hero-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--secondary);
+            box-shadow: 0 0 25px var(--secondary-glow);
+            animation: particleOrbit 5s linear infinite;
+        }
+        .hero-particle:nth-child(1) {
+            top: -30px;
+            left: 50%;
+            animation-delay: 0s;
+        }
+        .hero-particle:nth-child(2) {
+            top: 50%;
+            right: -30px;
+            animation-delay: 0.8s;
+        }
+        .hero-particle:nth-child(3) {
+            bottom: -30px;
+            left: 50%;
+            animation-delay: 1.6s;
+        }
+        .hero-particle:nth-child(4) {
+            top: 50%;
+            left: -30px;
+            animation-delay: 2.4s;
+        }
+        .hero-particle:nth-child(5) {
+            top: 5%;
+            left: -5%;
+            animation-delay: 3.2s;
+            width: 5px;
+            height: 5px;
+        }
+        .hero-particle:nth-child(6) {
+            bottom: 5%;
+            right: -5%;
+            animation-delay: 1.2s;
+            width: 5px;
+            height: 5px;
+        }
+        .hero-particle:nth-child(7) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 0.4s;
+            width: 6px;
+            height: 6px;
+        }
+        .hero-particle:nth-child(8) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 2s;
+            width: 6px;
+            height: 6px;
+        }
+        @keyframes particleOrbit {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: translate(30px, -45px) scale(1.6);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(0, -70px) scale(1);
+                opacity: 1;
+            }
+            75% {
+                transform: translate(-30px, -45px) scale(1.6);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        #home .title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 4rem;
+            color: var(--primary);
+            text-shadow: 0 0 100px rgba(0, 255, 100, 0.15), 0 4px 0 #005a2a;
+            letter-spacing: 3px;
+            line-height: 1.15;
+            position: relative;
+            animation: titleGlow 3s infinite alternate ease-in-out;
+        }
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 60px rgba(0, 255, 100, 0.1), 0 4px 0 #005a2a;
+            }
+            100% {
+                text-shadow: 0 0 100px rgba(0, 255, 100, 0.3), 0 4px 0 #005a2a, 0 0 200px rgba(0, 255, 100, 0.05);
+            }
+        }
+        #home .title small {
+            display: block;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 10px;
+            text-shadow: 0 0 40px rgba(255, 213, 79, 0.2);
+            margin-top: 6px;
+        }
+        #home .sub {
+            font-size: 1.2rem;
+            color: #aee8a0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 32px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 255, 100, 0.06);
+            margin: 2px 0 16px;
+            display: inline-block;
+        }
+        #home .sub i {
+            color: var(--secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .version-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 18px;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 3px;
+            pointer-events: none;
+        }
+
+        /* ===== SELECCIÓN PERSONAJE ===== */
+        .char-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 12px 0 18px;
+            width: 100%;
+            max-width: 640px;
+        }
+        .char-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 32px;
+            padding: 18px 14px 16px;
+            width: 145px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+        }
+        .char-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.03), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .char-card:hover::before {
+            opacity: 1;
+        }
+        .char-card:hover {
+            transform: scale(1.06);
+            border-color: rgba(0, 255, 100, 0.25);
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.05);
+        }
+        .char-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 50px rgba(0, 255, 100, 0.12), inset 0 0 30px rgba(0, 255, 100, 0.02);
+            background: rgba(0, 255, 100, 0.04);
+        }
+        .char-card .avatar {
+            font-size: 4.5rem;
+            display: block;
+            filter: drop-shadow(0 8px 20px rgba(0, 255, 100, 0.12));
+            transition: transform 0.3s ease;
+        }
+        .char-card.selected .avatar {
+            transform: scale(1.08);
+        }
+        .char-card .name {
+            font-weight: 900;
+            font-size: 1rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+        .char-card .desc {
+            font-size: 0.7rem;
+            color: #aee8a0;
+        }
+        .char-card .stats-mini {
+            font-size: 0.7rem;
+            color: var(--secondary);
+            margin-top: 4px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .char-card .stats-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 6px;
+            font-size: 0.65rem;
+            color: #aee8a0;
+        }
+        .char-card .stats-bars .bar-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .char-card .stats-bars .bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+        .char-card .stats-bars .bar-fill.fuerza {
+            background: linear-gradient(90deg, #ff6b6b, #ff4444);
+        }
+        .char-card .stats-bars .bar-fill.velocidad {
+            background: linear-gradient(90deg, #4fc3f7, #2196f3);
+        }
+        .char-card .stats-bars .bar-fill.reciclaje {
+            background: linear-gradient(90deg, var(--primary), #00cc55);
+        }
+
+        /* ===== MAPA ===== */
+        .map-container {
+            width: 100%;
+            max-width: 620px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 40px;
+            padding: 18px 16px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .map-node {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 14px 8px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+        }
+        .map-node:hover:not(.locked) {
+            background: rgba(0, 255, 100, 0.04);
+            border-color: var(--primary);
+            transform: scale(1.04);
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.04);
+        }
+        .map-node .icon {
+            font-size: 3.2rem;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+        }
+        .map-node .label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 4px;
+            color: #aee8a0;
+        }
+        .map-node .status {
+            font-size: 0.6rem;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+        .map-node.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+            filter: grayscale(0.6);
+        }
+        .map-node.completed {
+            border-color: var(--secondary);
+            background: rgba(255, 213, 79, 0.03);
+        }
+        .map-node .glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            filter: blur(4px);
+        }
+        .map-node:not(.locked):not(.completed):hover .glow {
+            opacity: 0.15;
+        }
+
+        /* ===== HUD ===== */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 60px;
+            padding: 8px 18px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            width: 100%;
+            max-width: 620px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 4px 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .status-bar span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+        .status-bar i {
+            width: 18px;
+            text-align: center;
+        }
+        .status-bar .coin-badge {
+            color: var(--secondary);
+        }
+        .status-bar .heart-badge {
+            color: #ff6b6b;
+        }
+        .status-bar .combo-badge {
+            color: var(--secondary);
+            background: rgba(255, 213, 79, 0.1);
+            padding: 0 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            display: none;
+            animation: comboPulse 0.5s ease;
+        }
+        .status-bar .combo-badge.active {
+            display: flex;
+        }
+        @keyframes comboPulse {
+            0% {
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ===== PROGRESO ===== */
+        .progress-bar {
+            width: 100%;
+            max-width: 620px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 4px 0 12px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.15);
+        }
+
+        /* ===== MISIÓN (SIN PISTAS) ===== */
+        .mission-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 32px;
+            padding: 20px 18px;
+            width: 100%;
+            max-width: 620px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .mission-box .badge {
+            background: rgba(0, 255, 100, 0.08);
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 100, 0.08);
+            display: inline-block;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .mission-box .question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 8px 0;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 14px 0;
+            width: 100%;
+        }
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 14px 10px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            color: #fff;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .opt-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            transform: scale(1.04);
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.05);
+        }
+        .opt-btn .opt-icon {
+            font-size: 3.2rem;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+        }
+        .opt-btn .opt-label {
+            font-size: 0.9rem;
+        }
+        .opt-btn.correct {
+            border-color: var(--primary);
+            background: rgba(0, 255, 100, 0.12);
+            box-shadow: 0 0 50px rgba(0, 255, 100, 0.1);
+            transform: scale(1.04);
+        }
+        .opt-btn.incorrect {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+            box-shadow: 0 0 50px rgba(255, 107, 107, 0.05);
+        }
+        .opt-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ===== MINIJUEGOS ===== */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 10px auto;
+            width: 100%;
+        }
+        .memory-card {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid rgba(255, 255, 255, 0.04);
+            user-select: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: scale(0.96);
+        }
+        .memory-card.flipped {
+            background: rgba(0, 255, 100, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.05);
+            transform: scale(1);
+        }
+        .memory-card.matched {
+            background: rgba(0, 255, 100, 0.1);
+            border-color: var(--primary);
+            opacity: 0.5;
+            cursor: default;
+            transform: scale(0.92);
+        }
+        .memory-card:hover:not(.flipped):not(.matched) {
+            transform: scale(1.04);
+            border-color: rgba(0, 255, 100, 0.2);
+        }
+
+        /* ===== TIENDA ===== */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 12px 0;
+            width: 100%;
+            max-width: 520px;
+        }
+        .shop-item {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 24px;
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        .shop-item .icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+        }
+        .shop-item .name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 2px 0;
+        }
+        .shop-item .price {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+        .shop-item .btn {
+            margin-top: 6px;
+            padding: 4px 16px;
+            font-size: 0.8rem;
+        }
+        .shop-item.owned {
+            border-color: var(--secondary);
+            background: rgba(255, 213, 79, 0.03);
+        }
+
+        /* ===== HISTORIA ===== */
+        .story-box {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 36px;
+            padding: 30px 24px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+        }
+        .story-box .narrator {
+            font-size: 0.9rem;
+            color: #aee8a0;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+        .story-box .dialog {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin: 10px 0;
+            font-weight: 400;
+        }
+        .story-box .avatar-dialog {
+            font-size: 5rem;
+            display: block;
+            margin: 4px auto;
+            filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.2));
+        }
+
+        /* ===== FINAL ===== */
+        .final-scene {
+            text-align: center;
+            max-width: 620px;
+            width: 100%;
+            animation: fadeIn 1s ease;
+        }
+        .final-scene .big-icon {
+            font-size: 8rem;
+            animation: floatHero 3s infinite alternate ease-in-out;
+            filter: drop-shadow(0 20px 60px rgba(255, 213, 79, 0.2));
+        }
+        .final-scene .title-final {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.6rem;
+            color: var(--secondary);
+            text-shadow: 0 0 60px rgba(255, 213, 79, 0.2), 0 4px 0 #b47c00;
+            line-height: 1.2;
+        }
+        .credits {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 16px;
+            max-height: 120px;
+            overflow-y: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 12px;
+        }
+        .credits p {
+            margin: 4px 0;
+        }
+        .final-stats {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 12px 0;
+        }
+        .final-stats .stat {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== EFECTO MONEDA 3D ===== */
+        .coin-fly {
+            position: fixed;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 999;
+            animation: coinFly3D 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            filter: drop-shadow(0 0 20px rgba(255, 213, 79, 0.4));
+            text-shadow: 0 0 10px rgba(255, 213, 79, 0.3);
+        }
+        @keyframes coinFly3D {
+            0% {
+                transform: scale(1) rotateY(0deg) translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.4) rotateY(180deg) translateY(-60px);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.3) rotateY(360deg) translateY(-140px);
+                opacity: 0;
+            }
+        }
+
+        /* ===== BOTÓN ATRÁS ===== */
+        .back-btn {
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            background: rgba(0, 0, 0, 0.35);
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.2s ease;
+            z-index: 20;
+            display: none;
+        }
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: scale(1.06);
+        }
+
+        /* ===== MISIONES DIARIAS ===== */
+        .daily-missions {
+            width: 100%;
+            max-width: 620px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .daily-missions .title {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .daily-missions .mission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 0.75rem;
+            color: #aee8a0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .daily-missions .mission-item:last-child {
+            border-bottom: none;
+        }
+        .daily-missions .mission-item .progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .daily-missions .mission-item .progress .bar {
+            width: 60px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .daily-missions .mission-item .progress .bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease;
+        }
+        .daily-missions .mission-item .status {
+            font-size: 0.6rem;
+            color: var(--secondary);
+        }
+        .daily-missions .mission-item .status.done {
+            color: var(--primary);
+        }
+
+        /* ===== MODAL HISTORIA ===== */
+        .story-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease;
+        }
+        .story-modal .content {
+            background: rgba(20, 30, 20, 0.9);
+            border-radius: 48px;
+            padding: 30px 24px;
+            max-width: 420px;
+            text-align: center;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 80px rgba(255, 213, 79, 0.05);
+            animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .story-modal .content .avatar {
+            font-size: 4.5rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .story-modal .content .narrator {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        .story-modal .content .dialog {
+            font-size: 1.1rem;
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 650px) {
+            .game-wrapper {
+                max-height: 100vh;
+                border-radius: 24px;
+            }
+            .screen {
+                padding: 12px 12px;
+            }
+            #home .title {
+                font-size: 2.6rem;
+            }
+            #home .title small {
+                font-size: 0.9rem;
+            }
+            #home .hero-avatar {
+                font-size: 5.5rem;
+            }
+            #home .hero-wrapper .hero-aura {
+                inset: -15px;
+            }
+            .char-card {
+                width: 110px;
+                padding: 12px 8px;
+            }
+            .char-card .avatar {
+                font-size: 3.5rem;
+            }
+            .map-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .shop-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .btn {
+                font-size: 0.95rem;
+                padding: 10px 20px;
+            }
+            .status-bar {
+                font-size: 0.7rem;
+                padding: 6px 14px;
+            }
+            .story-box .dialog {
+                font-size: 1rem;
+            }
+            .back-btn {
+                font-size: 1.2rem;
+                padding: 6px 14px;
+                top: 8px;
+                left: 10px;
+            }
+            .mission-box .question {
+                font-size: 1.1rem;
+            }
+            .opt-btn .opt-icon {
+                font-size: 2.8rem;
+            }
+            .final-scene .title-final {
+                font-size: 2rem;
+            }
+            .final-scene .big-icon {
+                font-size: 6rem;
+            }
+            .daily-missions .mission-item {
+                font-size: 0.65rem;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            .daily-missions .mission-item .progress .bar {
+                width: 40px;
+            }
+            .story-modal .content {
+                margin: 20px;
+                padding: 24px 18px;
+            }
+        }
+        @media (max-width: 400px) {
+            .map-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .char-card {
+                width: 90px;
+                padding: 8px 6px;
+            }
+            .char-card .avatar {
+                font-size: 2.8rem;
+            }
+            .char-card .name {
+                font-size: 0.75rem;
+            }
+            .shop-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== FONDO DINÁMICO ===== -->
+    <div class="bg-scene"></div>
+
+    <!-- Estrellas -->
+    <div class="stars" id="starsContainer"></div>
+
+    <!-- Nubes -->
+    <div class="clouds" id="cloudsContainer">
+        <div class="cloud" style="top:8%; animation-duration:45s; font-size:5rem;">☁️</div>
+        <div class="cloud" style="top:22%; animation-duration:55s; font-size:7rem; animation-delay:-12s;">☁️</div>
+        <div class="cloud" style="top:42%; animation-duration:48s; font-size:6rem; animation-delay:-22s;">☁️</div>
+        <div class="cloud" style="top:62%; animation-duration:52s; font-size:4.5rem; animation-delay:-6s;">☁️</div>
+        <div class="cloud" style="top:78%; animation-duration:58s; font-size:5.5rem; animation-delay:-18s;">☁️</div>
+    </div>
+
+    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+    <div class="game-wrapper">
+
+        <!-- Canvas de partículas -->
+        <canvas id="particles-canvas"></canvas>
+
+        <!-- Botón atrás -->
+        <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+
+        <!-- ============================================================
+        PANTALLA INICIO ÉPICA
+        ============================================================ -->
+        <div id="home" class="screen active">
+            <div class="hero-wrapper">
+                <div class="hero-aura"></div>
+                <div class="hero-aura-gold"></div>
+                <div class="hero-particles">
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                    <div class="hero-particle"></div>
+                </div>
+                <div class="hero-avatar">🌍🦸‍♂️</div>
+            </div>
+            <div class="title">
+                RECYCLE RANGERS
+                <small>♻️ EL RESURGIR DE LA TIERRA</small>
+            </div>
+            <div class="sub"><i class="fas fa-gamepad"></i> Aventura · Mapa · Historia · Minijuegos · RPG</div>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="btnNewGame"><i class="fas fa-play"></i> Nueva Aventura</button>
+                <button class="btn btn-secondary" id="btnContinue"><i class="fas fa-save"></i> Continuar</button>
+            </div>
+            <div style="margin-top:10px;font-size:0.75rem;color:#666;">
+                <i class="fas fa-star" style="color:var(--secondary);"></i> 6 niveles · 4 minijuegos · historia épica
+                <span style="margin-left:12px;"><i class="fas fa-fire" style="color:var(--accent);"></i> Combo</span>
+                <span style="margin-left:12px;"><i class="fas fa-trophy" style="color:var(--secondary);"></i> Logros</span>
+            </div>
+            <div class="version-badge">v2.0 · EDICIÓN ÉPICA</div>
+        </div>
+
+        <!-- ============================================================
+        SELECCIÓN DE PERSONAJE
+        ============================================================ -->
+        <div id="select-char" class="screen">
+            <h2 style="color:var(--secondary);margin-bottom:4px;font-size:1.8rem;">🦸 ELIGE A TU GUARDIÁN</h2>
+            <div style="font-size:0.9rem;color:#aee8a0;margin-bottom:8px;">Cada uno tiene habilidades únicas</div>
+            <div class="char-grid" id="charGrid">
+                <div class="char-card" data-id="0">
+                    <span class="avatar">🔥🦸‍♂️</span>
+                    <span class="name">Fire Ranger</span>
+                    <span class="desc">Apaga incendios</span>
+                    <div class="stats-mini"><span><i class="fas fa-heart" style="color:#ff6b6b;"></i> 4</span><span><i class="fas fa-bolt" style="color:var(--secondary);"></i> 1.2x</span></div>
+                    <div class="stats-bars">
+                        <div style="display:flex;justify-content:space-between;"><span>💪 Fuerza</span><span>4/5</span></div>
+                        <div class="bar-track"><div class="bar-fill fuerza" style="width:80%;"></div></div>
+                        <div style="display:flex;justify-content:space-between;"><span>⚡ Velocidad</span><span>3/5</span></div>
+                        <div class="bar-track"><div class="bar-fill velocidad" style="width:60%;"></div></div>
+                        <div style="display:flex;justify-content:space-between;"><span>♻️ Reciclaje</span><span>2/5</span></div>
+                        <div class="bar-track"><div class="bar-fill reciclaje" style="width:40%;"></div></div>
+                    </div>
+                </div>
+                <div class="char-card" data-id="1">
+                    <span class="avatar">💧🧝‍♀️</span>
+                    <span class="name">Aqua Ranger</span>
+                    <span class="desc">Limpia océanos</span>
+                    <div class="stats-mini"><span><i class="fas fa-heart" style="color:#ff6b6b;"></i> 3</span><span><i class="fas fa-bolt" style="color:var(--secondary);"></i> 1.5x</span></div>
+                    <div class="stats-bars">
+                        <div style="display:flex;justify-content:space-between;"><span>💪 Fuerza</span><span>3/5</span></div>
+                        <div class="bar-track"><div class="bar-fill fuerza" style="width:60%;"></div></div>
+                        <div style="display:flex;justify-content:space-between;"><span>⚡ Velocidad</span><span>4/5</span></div>
+                        <div class="bar-track"><div class="bar-fill velocidad" style="width:80%;"></div></div>
+                        <div style="display:flex;justify-content:space-between;"><span>♻️ Reciclaje</span><span>3/5</span></div>
+                        <div class="bar-track"><div class="bar-fill reciclaje" style="width:60%;"></div></div>
+                    </div>
+                </div>
+                <div class="char-card" data-id="2">
+                    <span class="avatar">🌳🦸‍♀️</span>
+                    <span class="name">Forest Ranger</span>
+                    <span class="desc">Planta árboles</span>
+                    <div class="stats-mini"><span><i class="fas fa-heart" style="color:#ff6b6b;"></i> 3</span><span><i class="fas fa-bolt" style="color:var(--secondary);"></i> 1.8x</span></div>
+                    <div class="stats-bars">
+                        <div style="display:flex;justify-content:space-between;"><span>💪 Fuerza</span><span>2/5</span></div>
+                        <div class="bar-track"><div class="bar-fill fuerza" style="width:40%;"></div></div>
+                        <div style="display:flex;justify-content:space-between;"><span>⚡ Velocidad</span><span>3/5</span></div>
+                        <div class="bar-track"><div class="bar-fill velocidad" style="width:60%;"></div></div>
+                        <div style="display:flex;justify-content:space-between;"><span>♻️ Reciclaje</span><span>5/5</span></div>
+                        <div class="bar-track"><div class="bar-fill reciclaje" style="width:100%;"></div></div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="btnStartGame"><i class="fas fa-rocket"></i> COMENZAR AVENTURA</button>
+            <button class="btn btn-secondary btn-sm" style="margin-top:8px;" id="btnBackHome">Volver</button>
+        </div>
+
+        <!-- ============================================================
+        MAPA
+        ============================================================ -->
+        <div id="map-screen" class="screen">
+            <div style="width:100%;max-width:620px;">
+                <div class="status-bar">
+                    <span class="heart-badge"><i class="fas fa-heart"></i> <span id="mapVidas">3</span></span>
+                    <span class="coin-badge"><i class="fas fa-coins"></i> <span id="mapCoins">0</span></span>
+                    <span><i class="fas fa-star" style="color:var(--secondary);"></i> <span id="mapScore">0</span></span>
+                    <span><i class="fas fa-level-up-alt" style="color:var(--primary);"></i> Nv. <span id="mapLevel">1</span></span>
+                    <span><i class="fas fa-trash-alt" style="color:#ff6b6b;"></i> <span id="mapBasura">0</span></span>
+                    <span class="combo-badge" id="comboBadge">🔥 Combo x<span id="comboCount">0</span></span>
+                </div>
+                <div class="map-container">
+                    <div class="map-grid" id="mapGrid"></div>
+                </div>
+
+                <!-- Misiones diarias -->
+                <div class="daily-missions" id="dailyMissions">
+                    <div class="title"><i class="fas fa-clipboard-list"></i> MISIONES DIARIAS</div>
+                    <div id="missionsList"></div>
+                </div>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px;">
+                    <button class="btn btn-secondary btn-sm" id="btnShop"><i class="fas fa-store"></i> Tienda</button>
+                    <button class="btn btn-secondary btn-sm" id="btnStory"><i class="fas fa-book"></i> Historia</button>
+                    <button class="btn btn-secondary btn-sm" id="btnAchievements"><i class="fas fa-trophy"></i> Logros</button>
+                    <button class="btn btn-secondary btn-sm" id="btnHomeFromMap"><i class="fas fa-home"></i> Inicio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        PANTALLA DE MISIÓN (SIN PISTAS)
+        ============================================================ -->
+        <div id="mission-screen" class="screen">
+            <div style="width:100%;max-width:620px;">
+                <div class="status-bar">
+                    <span class="heart-badge"><i class="fas fa-heart"></i> <span id="missionLives">❤️ ❤️ ❤️</span></span>
+                    <span class="coin-badge"><i class="fas fa-coins"></i> <span id="missionCoins">0</span></span>
+                    <span><i class="fas fa-star" style="color:var(--secondary);"></i> <span id="missionScore">0</span></span>
+                    <span><i class="fas fa-clock" style="color:#4fc3f7;"></i> <span id="missionTimer">⏳ 0</span></span>
+                    <span class="combo-badge" id="comboBadgeMission">🔥 Combo x<span id="comboCountMission">0</span></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="missionProgress"></div>
+                </div>
+                <div class="mission-box" id="missionBox">
+                    <!-- Contenido dinámico (sin pistas) -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        TIENDA
+        ============================================================ -->
+        <div id="shop-screen" class="screen">
+            <h2 style="color:var(--secondary);"><i class="fas fa-store"></i> TIENDA ECOLÓGICA</h2>
+            <div style="color:#aee8a0;font-size:0.9rem;">Gasta tus monedas en mejoras</div>
+            <div class="shop-grid" id="shopGrid"></div>
+            <button class="btn btn-secondary btn-sm" style="margin-top:8px;" id="btnBackMap">Volver al Mapa</button>
+        </div>
+
+        <!-- ============================================================
+        HISTORIA
+        ============================================================ -->
+        <div id="story-screen" class="screen">
+            <div class="story-box" id="storyBox">
+                <div class="narrator" id="storyNarrator">📖 Narrador</div>
+                <span class="avatar-dialog" id="storyAvatar">🌍</span>
+                <div class="dialog" id="storyDialog">Bienvenido a la historia de los Recycle Rangers...</div>
+                <button class="btn btn-primary btn-sm" id="storyNextBtn"><i class="fas fa-forward"></i> Siguiente</button>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-top:10px;" id="btnStoryBack">Volver</button>
+        </div>
+
+        <!-- ============================================================
+        LOGROS
+        ============================================================ -->
+        <div id="achievements-screen" class="screen">
+            <h2 style="color:var(--secondary);"><i class="fas fa-trophy"></i> LOGROS</h2>
+            <div style="color:#aee8a0;font-size:0.9rem;margin-bottom:10px;">Desbloquea todos los logros</div>
+            <div id="achievementsList" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:600px;width:100%;"></div>
+            <button class="btn btn-secondary btn-sm" style="margin-top:12px;" id="btnAchievementsBack">Volver</button>
+        </div>
+
+        <!-- ============================================================
+        FINAL CINEMATOGRÁFICO
+        ============================================================ -->
+        <div id="final-screen" class="screen">
+            <div class="final-scene">
+                <div class="big-icon">🌍✨</div>
+                <div class="title-final">¡EL PLANETA HA RESURGIDO!</div>
+                <div style="font-size:1.2rem;color:#aee8a0;margin:8px 0;">Gracias a los Recycle Rangers, la Tierra está viva de nuevo.</div>
+                <div class="final-stats">
+                    <span class="stat"><i class="fas fa-star" style="color:var(--secondary);"></i> <span id="finalScore">0</span> pts</span>
+                    <span class="stat"><i class="fas fa-coins" style="color:var(--secondary);"></i> <span id="finalCoins">0</span></span>
+                    <span class="stat"><i class="fas fa-trash-alt" style="color:#ff6b6b;"></i> <span id="finalBasura">0</span></span>
+                    <span class="stat"><i class="fas fa-city" style="color:#4fc3f7;"></i> <span id="finalCiudades">0</span></span>
+                </div>
+                <button class="btn btn-gold" id="btnPlayAgain"><i class="fas fa-redo"></i> JUGAR DE NUEVO</button>
+                <div class="credits" id="creditsBox">
+                    <p>🎮 Desarrollado con 💚 por EcoStudios</p>
+                    <p>✨ Arte: Emojis & CSS Art</p>
+                    <p>🎵 Música: Web Audio Symphony</p>
+                    <p>🌍 Gracias por salvar el planeta</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  RECYCLE RANGERS - EDICIÓN DEFINITIVA (SIN PISTAS)
+        // ================================================================
+
+        // ---------- GENERAR ESTRELLAS ----------
+        (function generateStars() {
+            const container = document.getElementById('starsContainer');
+            const types = ['gold', 'green', 'white'];
+            for (let i = 0; i < 160; i++) {
+                const star = document.createElement('div');
+                star.className = 'star ' + types[Math.floor(Math.random() * types.length)];
+                const size = 1 + Math.random() * 4;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                star.style.animationDuration = (1.5 + Math.random() * 2.5) + 's';
+                container.appendChild(star);
+            }
+        })();
+
+        // ---------- PARTÍCULAS ----------
+        (function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+
+            function resize() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                w = canvas.width = rect.width;
+                h = canvas.height = rect.height;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.r = 1.5 + Math.random() * 3;
+                    this.dx = (Math.random() - 0.5) * 0.4;
+                    this.dy = (Math.random() - 0.5) * 0.4;
+                    this.color = `hsla(${160 + Math.random() * 40}, 70%, 60%, ${0.06 + Math.random() * 0.12})`;
+                }
+                update() {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                    if (this.x < 0 || this.x > w) this.dx *= -1;
+                    if (this.y < 0 || this.y > h) this.dy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            }
+            for (let i = 0; i < 70; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => { p.update();
+                    p.draw(); });
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            window.addEventListener('resize', () => { resize();
+                particles.forEach(p => p.reset()); });
+        })();
+
+        // ---------- SONIDOS ----------
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+        let musicaInterval = null;
+        let musicaActiva = false;
+
+        function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
+
+        function playTone(freq, dur, type = 'sine', vol = 0.12) {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.value = vol;
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + dur);
+            } catch (e) {}
+        }
+
+        function sfxCorrect() {
+            playTone(880, 0.1, 'square', 0.12);
+            setTimeout(() => playTone(1100, 0.08, 'square', 0.12), 100);
+            setTimeout(() => playTone(1320, 0.06, 'square', 0.10), 200);
+        }
+
+        function sfxError() { playTone(280, 0.35, 'sawtooth', 0.10); }
+
+        function sfxLevelUp() { [523, 659, 784].forEach((f, i) => setTimeout(() => playTone(f, 0.15, 'sine', 0.12), i * 150)); }
+
+        function sfxPower() { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.12, 'sine', 0.15), i *
+            120)); }
+
+        function sfxVictory() { [523, 659, 784, 1047, 1318].forEach((f, i) => setTimeout(() => playTone(f, 0.15, 'sine', 0.15),
+                i * 140)); }
+
+        function sfxCoin() { playTone(1200, 0.08, 'sine', 0.10);
+            setTimeout(() => playTone(1500, 0.06, 'sine', 0.08), 80); }
+
+        function sfxButton() { playTone(600, 0.06, 'square', 0.06); }
+
+        // Música de fondo
+        function iniciarMusica() {
+            if (musicaActiva) return;
+            initAudio();
+            musicaActiva = true;
+            let nota = 0;
+            const notas = [523, 523, 587, 523, 659, 587, 523, 523, 587, 523, 784, 659];
+            musicaInterval = setInterval(() => {
+                if (!musicaActiva) return;
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = notas[nota % notas.length];
+                    gain.gain.value = 0.035;
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                    nota++;
+                } catch (e) {}
+            }, 280);
+        }
+
+        function detenerMusica() {
+            musicaActiva = false;
+            if (musicaInterval) { clearInterval(musicaInterval);
+                musicaInterval = null; }
+        }
+
+        // ---------- DATOS DEL JUEGO ----------
+        const PERSONAJES = [
+            { id: 0, nombre: 'Fire Ranger', avatar: '🔥🦸‍♂️', vidasExtra: 1, multiplicador: 1.2 },
+            { id: 1, nombre: 'Aqua Ranger', avatar: '💧🧝‍♀️', vidasExtra: 0, multiplicador: 1.5 },
+            { id: 2, nombre: 'Forest Ranger', avatar: '🌳🦸‍♀️', vidasExtra: 0, multiplicador: 1.8 }
+        ];
+
+        const NIVELES = [
+            { id: 'bosque', nombre: 'Bosque', icon: '🌳', desc: 'Salva los árboles', bloqueado: false, completado: false },
+            { id: 'ciudad', nombre: 'Ciudad', icon: '🏙️', desc: 'Limpia las calles', bloqueado: true, completado: false },
+            { id: 'oceano', nombre: 'Océano', icon: '🌊', desc: 'Protege la vida marina', bloqueado: true,
+            completado: false },
+            { id: 'montana', nombre: 'Montaña', icon: '⛰️', desc: 'Recupera los glaciares', bloqueado: true,
+                completado: false },
+            { id: 'volcan', nombre: 'Volcán', icon: '🌋', desc: 'Detén la erupción', bloqueado: true, completado: false },
+            { id: 'fabrica', nombre: 'Fábrica', icon: '🏭', desc: 'Cierra la contaminación', bloqueado: true,
+                completado: false }
+        ];
+
+        // PREGUNTAS (SIN PISTAS)
+        const PREGUNTAS = {
+            bosque: [
+                { q: '🐼 ¿Qué animal vive en el bosque?', opts: ['🐼 Panda', '🐬 Delfín', '🦈 Tiburón', '🐫 Camello'],
+                    correcta: 0 },
+                { q: '🌿 ¿Qué planta purifica el aire eficazmente?', opts: ['🌿 Helecho', '🌵 Cactus', '🌺 Rosa',
+                        '🍄 Seta'
+                    ], correcta: 0 },
+                { q: '🔥 ¿Qué acción ayuda al bosque?', opts: ['🌱 Plantar árboles', '🪓 Talar árboles', '🔥 Quemar',
+                        '🏗️ Construir'
+                    ], correcta: 0 },
+                { q: '💧 ¿Cuánta agua necesita un árbol adulto al día?', opts: ['50 L', '100 L', '200 L', '500 L'],
+                    correcta: 1 },
+                { q: '🦉 ¿Qué ave es símbolo del bosque?', opts: ['🦉 Búho', '🦅 Águila', '🐧 Pingüino', '🕊️ Paloma'],
+                    correcta: 0 }
+            ],
+            ciudad: [
+                { q: '♻️ ¿Dónde va el vidrio correctamente?', opts: ['🟢 Contenedor verde', '🟡 Amarillo', '🔵 Azul',
+                        '⚪ Blanco'
+                    ], correcta: 0 },
+                { q: '🚲 ¿Qué transporte reduce más la contaminación?', opts: ['🚲 Bicicleta', '🚗 Coche', '✈️ Avión',
+                        '🚢 Barco'
+                    ], correcta: 0 },
+                { q: '☀️ ¿Qué energía es 100% renovable?', opts: ['☀️ Solar', '🛢️ Petróleo', '⚡ Nuclear', '🔥 Carbón'],
+                    correcta: 0 },
+                { q: '🏭 ¿Qué gas emiten las fábricas contaminantes?', opts: ['💨 CO₂', '💧 H₂O', '🌬️ Oxígeno',
+                        '🌱 Nitrógeno'
+                    ], correcta: 0 },
+                { q: '🌳 ¿Qué ayuda a reducir el calor en la ciudad?', opts: ['🌳 Árboles', '🏢 Edificios', '🚗 Coches',
+                        '🏭 Fábricas'
+                    ], correcta: 0 }
+            ],
+            oceano: [
+                { q: '🧴 ¿Qué contamina más los océanos?', opts: ['🧴 Plástico', '🌊 Sal', '🐟 Peces', '🪸 Coral'],
+                    correcta: 0 },
+                { q: '🐬 ¿Qué animal vive en el océano?', opts: ['🐬 Delfín', '🐼 Panda', '🦁 León', '🐘 Elefante'],
+                    correcta: 0 },
+                { q: '♻️ ¿Qué acción limpia el océano?', opts: ['♻️ Reciclar plásticos', '🛢️ Verter petróleo',
+                        '🚮 Tirar basura', '🏭 Contaminar'
+                    ], correcta: 0 },
+                { q: '🌊 ¿Cuánto plástico llega al mar cada año?', opts: ['8 millones ton', '1 millón', '500 mil',
+                        '100 mil'
+                    ], correcta: 0 },
+                { q: '🐠 ¿Qué animal está en peligro por la contaminación?', opts: ['🐠 Pez payaso', '🦈 Tiburón',
+                        '🐬 Delfín', '🐟 Atún'
+                    ], correcta: 0 }
+            ],
+            montana: [
+                { q: '❄️ ¿Qué hay en las montañas altas?', opts: ['❄️ Nieve', '🏜️ Desierto', '🌴 Jungla', '🌾 Pradera'],
+                    correcta: 0 },
+                { q: '🌍 ¿Qué protege los glaciares del derretimiento?', opts: ['🌍 Cuidar el clima', '🔥 Calentar',
+                        '🏭 Contaminar', '🪓 Talar'
+                    ], correcta: 0 },
+                { q: '🦅 ¿Qué animal vive en montañas?', opts: ['🦅 Águila', '🐬 Delfín', '🐠 Pez', '🦁 León'],
+                    correcta: 0 },
+                { q: '⛰️ ¿Cómo se forman las montañas?', opts: ['🌋 Tectónica de placas', '🌊 Erosión', '💨 Viento',
+                        '☀️ Sol'
+                    ], correcta: 0 },
+                { q: '🌲 ¿Qué árbol crece en alta montaña?', opts: ['🌲 Pino', '🌴 Palmera', '🍎 Manzano', '🌳 Roble'],
+                    correcta: 0 }
+            ],
+            volcan: [
+                { q: '🌋 ¿Qué energía sale del volcán?', opts: ['🌋 Geotérmica', '☀️ Solar', '💨 Eólica', '💧 Hidráulica'],
+                    correcta: 0 },
+                { q: '🔥 ¿Qué daña la erupción volcánica?', opts: ['🌋 Lava', '🌊 Agua', '🌬️ Viento', '🌱 Plantas'],
+                    correcta: 0 },
+                { q: '🔬 ¿Qué previene desastres volcánicos?', opts: ['🔬 Estudio y monitoreo', '🏗️ Construir',
+                        '🔥 Quemar', '🌊 Inundar'
+                    ], correcta: 0 },
+                { q: '🌋 ¿Cuántos volcanes activos hay en el mundo?', opts: ['~1,500', '~500', '~3,000', '~100'],
+                    correcta: 0 },
+                { q: '⛰️ ¿Qué tipo de roca sale del volcán?', opts: ['🪨 Piedra pómez', '🪨 Granito', '🪨 Mármol',
+                        '🪨 Arena'
+                    ], correcta: 0 }
+            ],
+            fabrica: [
+                { q: '🏭 ¿Qué contamina principalmente una fábrica?', opts: ['🏭 Humo y desechos', '💧 Agua limpia',
+                        '🌬️ Viento', '🌱 Plantas'
+                    ], correcta: 0 },
+                { q: '♻️ ¿Qué reduce el humo tóxico?', opts: ['♻️ Filtros y purificadores', '🔥 Quemar', '🚮 Tirar',
+                        '🪓 Talar'
+                    ], correcta: 0 },
+                { q: '☀️ ¿Qué energía limpia puede usar una fábrica?', opts: ['☀️ Solar', '🛢️ Petróleo', '🔥 Carbón',
+                        '⚡ Nuclear'
+                    ], correcta: 0 },
+                { q: '🏭 ¿Qué ley protege el aire de las fábricas?', opts: ['📜 Ley de Emisiones', '📜 Ley de Agua',
+                        '📜 Ley de Bosques', '📜 Ley de Animales'
+                    ], correcta: 0 },
+                { q: '💧 ¿Qué contamina el agua de las fábricas?', opts: ['💧 Químicos', '🌊 Sal', '🌱 Plantas',
+                        '🪨 Piedras'
+                    ], correcta: 0 }
+            ]
+        };
+
+        const PUZZLE_PALABRAS = [
+            { desorden: 'RCOE', palabra: 'CO₂' },
+            { desorden: 'TAMEAN', palabra: 'METANO' },
+            { desorden: 'ZONOO', palabra: 'OZONO' },
+            { desorden: 'SLEBOR', palabra: 'BOSQUE' }
+        ];
+
+        // LOGROS
+        const ACHIEVEMENTS = [
+            { id: 'first_win', nombre: '🏅 Primer acierto', desc: 'Responde correctamente tu primera pregunta',
+                desbloqueado: false },
+            { id: 'combo_3', nombre: '🔥 Combo 3', desc: 'Consigue una racha de 3 aciertos', desbloqueado: false },
+            { id: 'combo_5', nombre: '⚡ Combo 5', desc: 'Consigue una racha de 5 aciertos', desbloqueado: false },
+            { id: 'nivel_3', nombre: '🌟 Nivel 3', desc: 'Alcanza el nivel 3', desbloqueado: false },
+            { id: 'salvado_ciudad', nombre: '🏙️ Salvador de ciudad', desc: 'Completa el nivel Ciudad',
+            desbloqueado: false },
+            { id: 'salvado_oceano', nombre: '🌊 Defensor del océano', desc: 'Completa el nivel Océano',
+            desbloqueado: false },
+            { id: 'salvado_bosque', nombre: '🌳 Guardián del bosque', desc: 'Completa el nivel Bosque',
+            desbloqueado: false },
+            { id: 'salvado_montana', nombre: '⛰️ Protector de montañas', desc: 'Completa el nivel Montaña',
+                desbloqueado: false },
+            { id: 'salvado_volcan', nombre: '🌋 Domador de volcanes', desc: 'Completa el nivel Volcán',
+            desbloqueado: false },
+            { id: 'salvado_fabrica', nombre: '🏭 Limpiador de fábricas', desc: 'Completa el nivel Fábrica',
+                desbloqueado: false },
+            { id: '100_puntos', nombre: '💯 100 puntos', desc: 'Alcanza 100 puntos', desbloqueado: false },
+            { id: '200_puntos', nombre: '🏆 200 puntos', desc: 'Alcanza 200 puntos', desbloqueado: false }
+        ];
+
+        // MISIONES DIARIAS
+        let misionesDiarias = [
+            { id: 'm1', desc: 'Responde 10 preguntas correctas', progreso: 0, max: 10, recompensa: 30, completada: false },
+            { id: 'm2', desc: 'Gana 50 monedas', progreso: 0, max: 50, recompensa: 15, completada: false },
+            { id: 'm3', desc: 'Completa 3 niveles', progreso: 0, max: 3, recompensa: 20, completada: false }
+        ];
+
+        // HISTORIA POR NIVEL
+        const HISTORIA_NIVELES = {
+            bosque: { narrador: '🌳 Espíritu del Bosque', avatar: '🌳',
+            dialog: '¡Gracias por salvar nuestros árboles! La vida verde renace.' },
+            ciudad: { narrador: '🏙️ Alcaldesa', avatar: '🏙️', dialog: 'La ciudad respira de nuevo. ¡Eres un héroe para todos!' },
+            oceano: { narrador: '🐬 Delfín Sabio', avatar: '🐬', dialog: 'El mar canta tu nombre. Los corales vuelven a florecer.' },
+            montana: { narrador: '⛰️ Guardián de la Montaña', avatar: '⛰️',
+            dialog: 'Los glaciares se recuperan. El agua pura fluye de nuevo.' },
+            volcan: { narrador: '🌋 Rey de la Lava', avatar: '🌋', dialog: 'Has domado el fuego. La tierra está en paz.' },
+            fabrica: { narrador: '🏭 Eco-Gerente', avatar: '🏭', dialog: 'La fábrica ahora es verde. ¡Gracias por limpiar el aire!' }
+        };
+
+        // ---------- ESTADO ----------
+        let game = {
+            personajeId: 0,
+            nivelActual: 'bosque',
+            misionActual: 0,
+            vidas: 3,
+            monedas: 20,
+            puntuacion: 0,
+            nivel: 1,
+            experiencia: 0,
+            basuraEliminada: 0,
+            ciudadesSalvadas: 0,
+            nivelesCompletados: [],
+            inventario: [],
+            skinsCompradas: [],
+            preguntasNivel: [],
+            respuestasCorrectas: 0,
+            totalPreguntas: 0,
+            modoMinijuego: false,
+            minijuegoTipo: null,
+            memoriaSeleccionadas: [],
+            memoriaPares: [],
+            dragItems: [],
+            dropZones: [],
+            guardado: false,
+            combo: 0,
+            maxCombo: 0,
+            logros: JSON.parse(JSON.stringify(ACHIEVEMENTS))
+        };
+
+        // ---------- DOM ----------
+        const $ = id => document.getElementById(id);
+        const screens = {
+            home: $('home'),
+            selectChar: $('select-char'),
+            map: $('map-screen'),
+            mission: $('mission-screen'),
+            shop: $('shop-screen'),
+            story: $('story-screen'),
+            final: $('final-screen'),
+            achievements: $('achievements-screen')
+        };
+        const backBtn = $('backBtn');
+
+        // ---------- NAVEGACIÓN ----------
+        function showScreen(id) {
+            Object.keys(screens).forEach(k => {
+                screens[k].classList.toggle('active', k === id);
+            });
+            backBtn.style.display = (id === 'home' || id === 'selectChar') ? 'none' : 'block';
+            window.currentScreen = id;
+            if (id === 'map') {
+                if (!musicaActiva) iniciarMusica();
+                renderMisionesDiarias();
+            } else if (id === 'mission') {
+                detenerMusica();
+            } else if (id === 'home') {
+                if (!musicaActiva) iniciarMusica();
+            }
+        }
+
+        function goBack() {
+            const s = window.currentScreen;
+            if (s === 'mission') showScreen('map');
+            else if (s === 'shop' || s === 'story' || s === 'achievements') showScreen('map');
+            else if (s === 'final') showScreen('home');
+            else showScreen('home');
+        }
+        backBtn.addEventListener('click', goBack);
+
+        // ---------- GUARDAR / CARGAR ----------
+        function saveGame() {
+            try {
+                const data = {
+                    personajeId: game.personajeId,
+                    monedas: game.monedas,
+                    puntuacion: game.puntuacion,
+                    nivel: game.nivel,
+                    experiencia: game.experiencia,
+                    basuraEliminada: game.basuraEliminada,
+                    ciudadesSalvadas: game.ciudadesSalvadas,
+                    nivelesCompletados: game.nivelesCompletados,
+                    inventario: game.inventario,
+                    skinsCompradas: game.skinsCompradas,
+                    vidas: game.vidas,
+                    nivelActual: game.nivelActual,
+                    logros: game.logros,
+                    maxCombo: game.maxCombo,
+                    misionesDiarias: misionesDiarias
+                };
+                localStorage.setItem('recycleRangersSave', JSON.stringify(data));
+                game.guardado = true;
+            } catch (e) {}
+        }
+
+        function loadGame() {
+            try {
+                const raw = localStorage.getItem('recycleRangersSave');
+                if (!raw) return false;
+                const data = JSON.parse(raw);
+                Object.assign(game, data);
+                if (data.misionesDiarias) misionesDiarias = data.misionesDiarias;
+                NIVELES.forEach(n => {
+                    n.bloqueado = n.id === 'bosque' ? false : true;
+                    n.completado = game.nivelesCompletados.includes(n.id);
+                    if (n.completado) {
+                        const idx = NIVELES.indexOf(n);
+                        if (idx < NIVELES.length - 1) NIVELES[idx + 1].bloqueado = false;
+                    }
+                });
+                if (!game.nivelesCompletados.includes(game.nivelActual) && game.nivelActual !== 'bosque') {
+                    game.nivelActual = 'bosque';
+                }
+                return true;
+            } catch (e) { return false; }
+        }
+
+        // ---------- LOGROS ----------
+        function checkAchievements() {
+            const ach = (id) => game.logros.find(a => a.id === id);
+            if (game.respuestasCorrectas >= 1 && !ach('first_win').desbloqueado) unlockAchievement('first_win');
+            if (game.combo >= 3 && !ach('combo_3').desbloqueado) unlockAchievement('combo_3');
+            if (game.combo >= 5 && !ach('combo_5').desbloqueado) unlockAchievement('combo_5');
+            if (game.nivel >= 3 && !ach('nivel_3').desbloqueado) unlockAchievement('nivel_3');
+            if (game.nivelesCompletados.includes('ciudad') && !ach('salvado_ciudad').desbloqueado) unlockAchievement(
+                'salvado_ciudad');
+            if (game.nivelesCompletados.includes('oceano') && !ach('salvado_oceano').desbloqueado) unlockAchievement(
+                'salvado_oceano');
+            if (game.nivelesCompletados.includes('bosque') && !ach('salvado_bosque').desbloqueado) unlockAchievement(
+                'salvado_bosque');
+            if (game.nivelesCompletados.includes('montana') && !ach('salvado_montana').desbloqueado) unlockAchievement(
+                'salvado_montana');
+            if (game.nivelesCompletados.includes('volcan') && !ach('salvado_volcan').desbloqueado) unlockAchievement(
+                'salvado_volcan');
+            if (game.nivelesCompletados.includes('fabrica') && !ach('salvado_fabrica').desbloqueado) unlockAchievement(
+                'salvado_fabrica');
+            if (game.puntuacion >= 100 && !ach('100_puntos').desbloqueado) unlockAchievement('100_puntos');
+            if (game.puntuacion >= 200 && !ach('200_puntos').desbloqueado) unlockAchievement('200_puntos');
+            saveGame();
+        }
+
+        function unlockAchievement(id) {
+            const ach = game.logros.find(a => a.id === id);
+            if (ach && !ach.desbloqueado) {
+                ach.desbloqueado = true;
+                sfxPower();
+                const notif = document.createElement('div');
+                notif.style.cssText =
+                    'position:fixed;top:18%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#ffd54f;padding:16px 30px;border-radius:40px;font-weight:900;font-size:1.1rem;z-index:9999;backdrop-filter:blur(12px);border:2px solid #ffd54f;animation:fadeIn 0.5s ease;text-align:center;';
+                notif.innerHTML = '🏆 ' + ach.nombre + '<br><span style="font-size:0.75rem;color:#aee8a0;">' + ach.desc +
+                    '</span>';
+                document.body.appendChild(notif);
+                setTimeout(() => { notif.style.opacity = '0';
+                    setTimeout(() => notif.remove(), 500); }, 3200);
+                saveGame();
+            }
+        }
+
+        function renderAchievements() {
+            const container = document.getElementById('achievementsList');
+            container.innerHTML = game.logros.map(a => `
+                <div style="background:rgba(0,0,0,0.2);border-radius:20px;padding:12px 14px;border:1px solid ${a.desbloqueado ? 'var(--secondary)' : 'rgba(255,255,255,0.05)'};display:flex;align-items:center;gap:10px;${a.desbloqueado ? 'box-shadow:0 0 30px rgba(255,213,79,0.05);' : 'opacity:0.4;'}">
+                    <span style="font-size:1.8rem;">${a.desbloqueado ? '✅' : '🔒'}</span>
+                    <div>
+                        <div style="font-weight:700;font-size:0.9rem;">${a.nombre}</div>
+                        <div style="font-size:0.7rem;color:#94a3b8;">${a.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ---------- MISIONES DIARIAS ----------
+        function renderMisionesDiarias() {
+            const container = document.getElementById('missionsList');
+            misionesDiarias.forEach(m => {
+                if (m.completada) return;
+                if (m.id === 'm1') m.progreso = Math.min(game.respuestasCorrectas, m.max);
+                if (m.id === 'm2') m.progreso = Math.min(game.monedas, m.max);
+                if (m.id === 'm3') m.progreso = Math.min(game.nivelesCompletados.length, m.max);
+                if (m.progreso >= m.max && !m.completada) {
+                    m.completada = true;
+                    game.monedas += m.recompensa;
+                    sfxPower();
+                    const notif = document.createElement('div');
+                    notif.style.cssText =
+                        'position:fixed;top:18%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#ffd54f;padding:16px 30px;border-radius:40px;font-weight:900;font-size:1.1rem;z-index:9999;backdrop-filter:blur(12px);border:2px solid #ffd54f;animation:fadeIn 0.5s ease;text-align:center;';
+                    notif.innerHTML = '📋 ¡Misión completada!<br><span style="font-size:0.8rem;color:#aee8a0;">' + m.desc +
+                        ' (+' + m.recompensa + ' 🪙)</span>';
+                    document.body.appendChild(notif);
+                    setTimeout(() => { notif.style.opacity = '0';
+                        setTimeout(() => notif.remove(), 500); }, 3000);
+                    saveGame();
+                }
+            });
+
+            container.innerHTML = misionesDiarias.map(m => {
+                const pct = Math.min(100, (m.progreso / m.max) * 100);
+                const done = m.completada;
+                return `
+                    <div class="mission-item">
+                        <span>${m.desc}</span>
+                        <div class="progress">
+                            <div class="bar"><div class="fill" style="width:${pct}%;background:${done ? 'var(--primary)' : 'linear-gradient(90deg, var(--primary), var(--secondary))'};"></div></div>
+                            <span style="font-size:0.65rem;color:#94a3b8;">${done ? '✅' : m.progreso + '/' + m.max}</span>
+                            <span class="status ${done ? 'done' : ''}">${done ? '✅ Completada' : '🪙 ' + m.recompensa}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ---------- HISTORIA POR NIVEL ----------
+        function mostrarHistoriaNivel(nivelId) {
+            const historia = HISTORIA_NIVELES[nivelId];
+            if (!historia) return;
+            const modal = document.createElement('div');
+            modal.className = 'story-modal';
+            modal.innerHTML = `
+                <div class="content">
+                    <span class="avatar">${historia.avatar}</span>
+                    <div class="narrator">${historia.narrador}</div>
+                    <div class="dialog">“${historia.dialog}”</div>
+                    <button class="btn btn-primary" onclick="this.closest('.story-modal').remove();">Continuar</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            sfxLevelUp();
+        }
+
+        // ---------- SELECCIÓN PERSONAJE ----------
+        function initCharSelect() {
+            const grid = $('charGrid');
+            grid.querySelectorAll('.char-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    grid.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    game.personajeId = parseInt(this.dataset.id);
+                    $('btnStartGame').innerHTML =
+                        `<i class="fas fa-rocket"></i> COMENZAR CON ${PERSONAJES[game.personajeId].nombre}`;
+                    sfxButton();
+                });
+            });
+            const first = grid.querySelector('.char-card');
+            if (first) first.click();
+        }
+
+        // ---------- MAPA ----------
+        function renderMap() {
+            const grid = $('mapGrid');
+            grid.innerHTML = '';
+            NIVELES.forEach((nivel, idx) => {
+                const div = document.createElement('div');
+                div.className = 'map-node';
+                if (nivel.bloqueado) div.classList.add('locked');
+                if (nivel.completado) div.classList.add('completed');
+                div.innerHTML = `
+                    <div class="glow"></div>
+                    <div class="icon">${nivel.icon}</div>
+                    <div class="label">${nivel.nombre}</div>
+                    <div class="status">${nivel.completado ? '✅' : nivel.bloqueado ? '🔒' : '⏳'}</div>
+                `;
+                if (!nivel.bloqueado && !nivel.completado) {
+                    div.addEventListener('click', () => iniciarNivel(nivel.id));
+                }
+                grid.appendChild(div);
+            });
+
+            $('mapVidas').textContent = game.vidas;
+            $('mapCoins').textContent = game.monedas;
+            $('mapScore').textContent = game.puntuacion;
+            $('mapLevel').textContent = game.nivel;
+            $('mapBasura').textContent = game.basuraEliminada;
+
+            const comboBadge = document.getElementById('comboBadge');
+            const comboCount = document.getElementById('comboCount');
+            if (game.combo > 1) {
+                comboBadge.classList.add('active');
+                comboCount.textContent = game.combo;
+            } else {
+                comboBadge.classList.remove('active');
+            }
+            renderMisionesDiarias();
+        }
+
+        // ---------- EFECTO MONEDA 3D ----------
+        function crearEfectoMoneda(elemento) {
+            const rect = elemento.getBoundingClientRect();
+            const coin = document.createElement('div');
+            coin.className = 'coin-fly';
+            coin.textContent = '🪙';
+            coin.style.left = rect.left + rect.width / 2 - 25 + 'px';
+            coin.style.top = rect.top - 10 + 'px';
+            document.body.appendChild(coin);
+            sfxCoin();
+            setTimeout(() => coin.remove(), 1000);
+        }
+
+        // ---------- MOSTRAR FEEDBACK ----------
+        function mostrarFeedback(texto, esCorrecto) {
+            const fb = document.createElement('div');
+            fb.style.cssText =
+                'position:fixed;bottom:15%;left:50%;transform:translateX(-50%);font-size:1.3rem;font-weight:700;z-index:999;padding:8px 24px;border-radius:40px;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);border:2px solid ' +
+                (esCorrecto ? 'var(--primary)' : '#ff6b6b') + ';color:' + (esCorrecto ? 'var(--primary)' : '#ff6b6b') +
+                ';animation:fadeIn 0.3s ease;text-align:center;';
+            fb.textContent = texto;
+            document.body.appendChild(fb);
+            setTimeout(() => {
+                fb.style.opacity = '0';
+                setTimeout(() => fb.remove(), 400);
+            }, 2200);
+        }
+
+        // ---------- INICIAR NIVEL ----------
+        function iniciarNivel(id) {
+            sfxButton();
+            if (!PREGUNTAS[id]) return;
+            game.nivelActual = id;
+            game.misionActual = 0;
+            game.respuestasCorrectas = 0;
+            game.preguntasNivel = PREGUNTAS[id];
+            game.totalPreguntas = game.preguntasNivel.length;
+            game.modoMinijuego = false;
+
+            const idx = NIVELES.findIndex(n => n.id === id);
+            if (idx === 2 || idx === 3 || idx === 4) {
+                game.modoMinijuego = true;
+                const tipos = ['memory', 'puzzle', 'dragdrop'];
+                game.minijuegoTipo = tipos[idx - 2] || 'memory';
+            } else {
+                game.modoMinijuego = false;
+            }
+
+            showScreen('mission');
+            cargarMision();
+        }
+
+        // ---------- CARGAR MISIÓN (SIN PISTAS) ----------
+        function cargarMision() {
+            const box = $('missionBox');
+            const progress = $('missionProgress');
+            const pct = game.totalPreguntas > 0 ? (game.misionActual / game.totalPreguntas) * 100 : 0;
+            progress.style.width = pct + '%';
+
+            $('missionLives').textContent = '❤️ '.repeat(game.vidas) + '🖤 '.repeat(5 - game.vidas);
+            $('missionCoins').textContent = game.monedas;
+            $('missionScore').textContent = game.puntuacion;
+            $('missionTimer').textContent = '⏳ ' + (15 - Math.floor(game.misionActual * 0.5));
+
+            const comboBadge = document.getElementById('comboBadgeMission');
+            const comboCount = document.getElementById('comboCountMission');
+            if (game.combo > 1) {
+                comboBadge.classList.add('active');
+                comboCount.textContent = game.combo;
+            } else {
+                comboBadge.classList.remove('active');
+            }
+
+            if (game.misionActual >= game.totalPreguntas || game.vidas <= 0) {
+                finalizarNivel();
+                return;
+            }
+
+            if (game.modoMinijuego) {
+                if (game.minijuegoTipo === 'memory') cargarMemory();
+                else if (game.minijuegoTipo === 'puzzle') cargarPuzzle();
+                else if (game.minijuegoTipo === 'dragdrop') cargarDragDrop();
+                return;
+            }
+
+            const pregunta = game.preguntasNivel[game.misionActual];
+            const nivelData = NIVELES.find(n => n.id === game.nivelActual);
+
+            // SIN PISTAS - Solo la pregunta y las opciones
+            box.innerHTML = `
+                <div class="badge">📝 ${nivelData ? nivelData.nombre : 'Nivel'} · ${game.misionActual + 1}/${game.totalPreguntas}</div>
+                <div class="question">${pregunta.q}</div>
+                <div class="options-grid" id="optsGrid">
+                    ${pregunta.opts.map((opt, idx) => `
+                        <div class="opt-btn" data-idx="${idx}">
+                            <span class="opt-icon">${opt}</span>
+                            <span class="opt-label">Opción ${idx+1}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            box.querySelectorAll('.opt-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.idx);
+                    responderPregunta(idx);
+                });
+            });
+        }
+
+        // ---------- RESPONDER ----------
+        function responderPregunta(idx) {
+            const pregunta = game.preguntasNivel[game.misionActual];
+            const btns = document.querySelectorAll('.opt-btn');
+            btns.forEach(b => b.style.pointerEvents = 'none');
+
+            const correcta = idx === pregunta.correcta;
+            if (correcta) {
+                btns[idx].classList.add('correct');
+                const bonus = Math.round(10 * (PERSONAJES[game.personajeId].multiplicador || 1));
+                game.combo++;
+                if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+                let comboBonus = 0;
+                if (game.combo >= 3) {
+                    comboBonus = game.combo * 2;
+                    mostrarFeedback('🔥 Combo x' + game.combo + '! +' + comboBonus + ' pts extra', true);
+                }
+                game.puntuacion += bonus + comboBonus;
+                game.monedas += 5;
+                game.respuestasCorrectas++;
+                game.basuraEliminada += 2;
+                sfxCorrect();
+                crearEfectoMoneda(btns[idx]);
+                if (game.respuestasCorrectas % 2 === 0) game.ciudadesSalvadas++;
+                game.experiencia += 10 + (game.combo >= 3 ? game.combo * 2 : 0);
+                if (game.experiencia >= 50) {
+                    game.experiencia = 0;
+                    game.nivel++;
+                    sfxLevelUp();
+                    const fb = document.createElement('div');
+                    fb.style.cssText =
+                        'color:var(--secondary);font-weight:900;font-size:1.4rem;margin-top:8px;animation:fadeIn 0.5s;';
+                    fb.textContent = '⬆️ ¡Nivel ' + game.nivel + '!';
+                    document.querySelector('.mission-box').appendChild(fb);
+                    setTimeout(() => fb.remove(), 1500);
+                }
+                checkAchievements();
+                renderMisionesDiarias();
+            } else {
+                btns[idx].classList.add('incorrect');
+                btns[pregunta.correcta].classList.add('correct');
+                game.vidas--;
+                game.monedas = Math.max(0, game.monedas - 2);
+                game.combo = 0;
+                sfxError();
+                if (game.vidas <= 0) {
+                    setTimeout(() => finalizarNivel(), 800);
+                    return;
+                }
+            }
+
+            $('missionLives').textContent = '❤️ '.repeat(game.vidas) + '🖤 '.repeat(5 - game.vidas);
+            $('missionCoins').textContent = game.monedas;
+            $('missionScore').textContent = game.puntuacion;
+
+            const comboBadge = document.getElementById('comboBadgeMission');
+            const comboCount = document.getElementById('comboCountMission');
+            if (game.combo > 1) {
+                comboBadge.classList.add('active');
+                comboCount.textContent = game.combo;
+            } else {
+                comboBadge.classList.remove('active');
+            }
+
+            setTimeout(() => {
+                game.misionActual++;
+                cargarMision();
+            }, 800);
+        }
+
+        // ---------- MINIJUEGO: MEMORIA ----------
+        function cargarMemory() {
+            const box = $('missionBox');
+            const pool = ['🌳', '🌊', '☀️', '♻️', '🐼', '💧', '🌱', '🦸'];
+            const selected = pool.slice(0, 6);
+            const deck = [...selected, ...selected];
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            game.memoriaPares = deck;
+            game.memoriaSeleccionadas = [];
+            let paresEncontrados = 0;
+
+            box.innerHTML = `
+                <div class="badge">🧠 MINIJUEGO: MEMORIA</div>
+                <div style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Encuentra todos los pares</div>
+                <div class="memory-grid" id="memoryGrid">
+                    ${deck.map((_, i) => `<div class="memory-card" data-idx="${i}">❓</div>`).join('')}
+                </div>
+                <div style="margin-top:6px;font-size:0.9rem;color:#aee8a0;">Pares: <span id="paresCount">0</span>/6</div>
+            `;
+
+            const grid = box.querySelector('#memoryGrid');
+            const paresSpan = box.querySelector('#paresCount');
+
+            grid.addEventListener('click', function(e) {
+                const card = e.target.closest('.memory-card');
+                if (!card) return;
+                const idx = parseInt(card.dataset.idx);
+                if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+                if (game.memoriaSeleccionadas.length >= 2) return;
+
+                card.textContent = deck[idx];
+                card.classList.add('flipped');
+                game.memoriaSeleccionadas.push({ idx, el: card });
+
+                if (game.memoriaSeleccionadas.length === 2) {
+                    const [a, b] = game.memoriaSeleccionadas;
+                    if (deck[a.idx] === deck[b.idx] && a.idx !== b.idx) {
+                        a.el.classList.add('matched');
+                        b.el.classList.add('matched');
+                        paresEncontrados++;
+                        paresSpan.textContent = paresEncontrados;
+                        sfxCorrect();
+                        game.puntuacion += 15;
+                        game.monedas += 8;
+                        game.basuraEliminada += 3;
+                        game.respuestasCorrectas++;
+                        game.combo++;
+                        if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+                        crearEfectoMoneda(a.el);
+                        game.memoriaSeleccionadas = [];
+                        checkAchievements();
+                        if (paresEncontrados === 6) {
+                            game.misionActual = game.totalPreguntas;
+                            setTimeout(() => finalizarNivel(), 500);
+                        }
+                    } else {
+                        sfxError();
+                        game.combo = 0;
+                        setTimeout(() => {
+                            a.el.textContent = '❓';
+                            a.el.classList.remove('flipped');
+                            b.el.textContent = '❓';
+                            b.el.classList.remove('flipped');
+                            game.memoriaSeleccionadas = [];
+                        }, 700);
+                        game.vidas--;
+                        if (game.vidas <= 0) {
+                            setTimeout(() => finalizarNivel(), 400);
+                        }
+                    }
+                    $('missionLives').textContent = '❤️ '.repeat(game.vidas) + '🖤 '.repeat(5 - game.vidas);
+                    $('missionCoins').textContent = game.monedas;
+                    $('missionScore').textContent = game.puntuacion;
+                    const comboBadge = document.getElementById('comboBadgeMission');
+                    const comboCount = document.getElementById('comboCountMission');
+                    if (game.combo > 1) {
+                        comboBadge.classList.add('active');
+                        comboCount.textContent = game.combo;
+                    } else {
+                        comboBadge.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        // ---------- MINIJUEGO: PUZZLE ----------
+        function cargarPuzzle() {
+            const box = $('missionBox');
+            const puzzle = PUZZLE_PALABRAS[game.misionActual % PUZZLE_PALABRAS.length];
+            const desorden = puzzle.desorden.split('').join(' ');
+            const correcta = puzzle.palabra;
+
+            box.innerHTML = `
+                <div class="badge">🧩 MINIJUEGO: ORDENA LA PALABRA</div>
+                <div style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Ordena las letras:</div>
+                <div style="font-size:3rem;letter-spacing:12px;font-weight:700;color:var(--secondary);background:rgba(0,0,0,0.2);padding:12px;border-radius:20px;margin:6px 0;font-family:monospace;">
+                    ${desorden}
+                </div>
+                <div class="options-grid" id="puzzleOpts">
+                    ${['CO₂', 'METANO', 'OZONO', 'BOSQUE'].map(opt => `
+                        <div class="opt-btn" data-word="${opt}">
+                            <span class="opt-label">${opt}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            box.querySelectorAll('.opt-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elegida = this.dataset.word;
+                    if (elegida === correcta) {
+                        this.classList.add('correct');
+                        sfxCorrect();
+                        game.puntuacion += 20;
+                        game.monedas += 10;
+                        game.basuraEliminada += 5;
+                        game.respuestasCorrectas++;
+                        game.combo++;
+                        if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+                        crearEfectoMoneda(this);
+                        $('missionCoins').textContent = game.monedas;
+                        $('missionScore').textContent = game.puntuacion;
+                        document.querySelectorAll('.opt-btn').forEach(b => b.style.pointerEvents = 'none');
+                        checkAchievements();
+                        game.misionActual = game.totalPreguntas;
+                        setTimeout(() => finalizarNivel(), 800);
+                    } else {
+                        this.classList.add('incorrect');
+                        sfxError();
+                        game.combo = 0;
+                        game.vidas--;
+                        $('missionLives').textContent = '❤️ '.repeat(game.vidas) + '🖤 '.repeat(5 - game.vidas);
+                        if (game.vidas <= 0) {
+                            setTimeout(() => finalizarNivel(), 400);
+                        }
+                    }
+                    const comboBadge = document.getElementById('comboBadgeMission');
+                    const comboCount = document.getElementById('comboCountMission');
+                    if (game.combo > 1) {
+                        comboBadge.classList.add('active');
+                        comboCount.textContent = game.combo;
+                    } else {
+                        comboBadge.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // ---------- MINIJUEGO: DRAG & DROP ----------
+        function cargarDragDrop() {
+            const box = $('missionBox');
+            const items = [
+                { id: 'vidrio', icon: '🍾', label: 'Vidrio', categoria: 'reciclable' },
+                { id: 'plastico', icon: '🧴', label: 'Plástico', categoria: 'reciclable' },
+                { id: 'organico', icon: '🍎', label: 'Orgánico', categoria: 'organico' },
+                { id: 'metal', icon: '🥫', label: 'Metal', categoria: 'reciclable' }
+            ];
+            const categorias = [
+                { id: 'reciclable', label: '♻️ Reciclable', items: [] },
+                { id: 'organico', label: '🌱 Orgánico', items: [] }
+            ];
+
+            const shuffled = [...items];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
+            game.dragItems = shuffled;
+            game.dropZones = categorias.map(c => ({ ...c, items: [] }));
+
+            box.innerHTML = `
+                <div class="badge">🔄 MINIJUEGO: CLASIFICA RESIDUOS</div>
+                <div style="font-size:1rem;font-weight:700;margin-bottom:6px;">Arrastra cada residuo a su categoría</div>
+                <div class="drag-container" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:12px 0;width:100%;">
+                    ${shuffled.map(item => `
+                        <div class="drag-item" draggable="true" data-id="${item.id}" data-categoria="${item.categoria}" style="background:rgba(255,255,255,0.06);border-radius:20px;padding:12px 18px;font-size:2rem;cursor:grab;border:2px solid rgba(255,255,255,0.06);transition:all 0.2s ease;user-select:none;">
+                            ${item.icon} ${item.label}
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:8px 0;width:100%;">
+                    ${categorias.map(cat => `
+                        <div class="drop-zone" data-zone="${cat.id}" style="flex:1;min-width:120px;background:rgba(255,255,255,0.03);border:2px dashed rgba(255,255,255,0.08);border-radius:24px;padding:14px 12px;min-width:100px;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.3s ease;">
+                            <div style="font-size:0.8rem;color:#888;">${cat.label}</div>
+                            <div class="zone-content" id="zone-${cat.id}" style="font-size:2rem;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;"></div>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn btn-primary btn-sm" id="checkDragBtn" disabled><i class="fas fa-check"></i> Verificar</button>
+            `;
+
+            const dragItems = box.querySelectorAll('.drag-item');
+            const dropZones = box.querySelectorAll('.drop-zone');
+            let draggedId = null;
+
+            dragItems.forEach(el => {
+                el.addEventListener('dragstart', function(e) {
+                    draggedId = this.dataset.id;
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                el.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+                zone.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    if (!draggedId) return;
+                    const item = game.dragItems.find(i => i.id === draggedId);
+                    if (!item) return;
+                    const dragEl = box.querySelector(`.drag-item[data-id="${draggedId}"]`);
+                    if (dragEl) dragEl.remove();
+                    const zoneContent = box.querySelector(`#zone-${this.dataset.zone}`);
+                    const span = document.createElement('span');
+                    span.textContent = item.icon;
+                    span.style.fontSize = '2rem';
+                    span.style.margin = '0 4px';
+                    zoneContent.appendChild(span);
+                    const zoneData = game.dropZones.find(z => z.id === this.dataset.zone);
+                    if (zoneData) zoneData.items.push(item.id);
+                    draggedId = null;
+                    const remaining = box.querySelectorAll('.drag-item');
+                    $('checkDragBtn').disabled = remaining.length > 0;
+                });
+            });
+
+            $('checkDragBtn').addEventListener('click', function() {
+                let correctos = 0;
+                game.dropZones.forEach(zone => {
+                    zone.items.forEach(itemId => {
+                        const item = game.dragItems.find(i => i.id === itemId);
+                        if (item && item.categoria === zone.id) correctos++;
+                    });
+                });
+                if (correctos === game.dragItems.length) {
+                    sfxCorrect();
+                    game.puntuacion += 25;
+                    game.monedas += 15;
+                    game.basuraEliminada += 8;
+                    game.respuestasCorrectas += 2;
+                    game.combo += 2;
+                    if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+                    crearEfectoMoneda($('checkDragBtn'));
+                    $('missionCoins').textContent = game.monedas;
+                    $('missionScore').textContent = game.puntuacion;
+                    this.textContent = '✅ ¡Clasificación perfecta!';
+                    this.disabled = true;
+                    checkAchievements();
+                    game.misionActual = game.totalPreguntas;
+                    setTimeout(() => finalizarNivel(), 800);
+                } else {
+                    sfxError();
+                    game.combo = 0;
+                    game.vidas--;
+                    $('missionLives').textContent = '❤️ '.repeat(game.vidas) + '🖤 '.repeat(5 - game.vidas);
+                    if (game.vidas <= 0) {
+                        setTimeout(() => finalizarNivel(), 400);
+                    }
+                    this.textContent = '❌ Intenta de nuevo';
+                    setTimeout(() => { this.textContent = '<i class="fas fa-check"></i> Verificar'; }, 1500);
+                }
+                const comboBadge = document.getElementById('comboBadgeMission');
+                const comboCount = document.getElementById('comboCountMission');
+                if (game.combo > 1) {
+                    comboBadge.classList.add('active');
+                    comboCount.textContent = game.combo;
+                } else {
+                    comboBadge.classList.remove('active');
+                }
+            });
+        }
+
+        // ---------- FINALIZAR NIVEL ----------
+        function finalizarNivel() {
+            const completado = game.vidas > 0 && game.respuestasCorrectas >= game.totalPreguntas * 0.5;
+            const id = game.nivelActual;
+
+            if (completado) {
+                if (!game.nivelesCompletados.includes(id)) {
+                    game.nivelesCompletados.push(id);
+                    const idx = NIVELES.findIndex(n => n.id === id);
+                    if (idx < NIVELES.length - 1) NIVELES[idx + 1].bloqueado = false;
+                    NIVELES[idx].completado = true;
+                    game.monedas += 20;
+                    game.puntuacion += 30;
+                    sfxLevelUp();
+                    checkAchievements();
+                    saveGame();
+                    setTimeout(() => mostrarHistoriaNivel(id), 600);
+                }
+                const box = $('missionBox');
+                box.innerHTML = `
+                    <div class="badge" style="background:rgba(0,255,100,0.12);color:var(--primary);">✅ NIVEL COMPLETADO</div>
+                    <div style="font-size:3.5rem;margin:8px 0;">🏆</div>
+                    <div style="font-size:1.2rem;font-weight:700;">¡Has salvado ${NIVELES.find(n=>n.id===id).nombre}!</div>
+                    <button class="btn btn-primary" style="margin-top:12px;" id="btnNextLevel">Continuar</button>
+                `;
+                box.querySelector('#btnNextLevel').addEventListener('click', () => {
+                    showScreen('map');
+                    renderMap();
+                    if (game.nivelesCompletados.length === NIVELES.length) {
+                        mostrarFinal();
+                    }
+                });
+                renderMap();
+                saveGame();
+            } else {
+                const box = $('missionBox');
+                box.innerHTML = `
+                    <div class="badge" style="background:rgba(255,68,68,0.12);color:#ff6b6b;">❌ MISIÓN FALLIDA</div>
+                    <div style="font-size:3rem;margin:8px 0;">😞</div>
+                    <div style="font-size:1.1rem;">No lograste salvar ${NIVELES.find(n=>n.id===id).nombre}.</div>
+                    <div style="font-size:0.9rem;color:#aee8a0;">Intenta de nuevo desde el mapa.</div>
+                    <button class="btn btn-secondary" style="margin-top:12px;" id="btnRetry">Volver al mapa</button>
+                `;
+                box.querySelector('#btnRetry').addEventListener('click', () => {
+                    showScreen('map');
+                    renderMap();
+                });
+            }
+            game.combo = 0;
+            const comboBadge = document.getElementById('comboBadgeMission');
+            comboBadge.classList.remove('active');
+        }
+
+        // ---------- FINAL ----------
+        function mostrarFinal() {
+            $('finalScore').textContent = game.puntuacion;
+            $('finalCoins').textContent = game.monedas;
+            $('finalBasura').textContent = game.basuraEliminada;
+            $('finalCiudades').textContent = game.ciudadesSalvadas;
+            showScreen('final');
+            setTimeout(() => {
+                lanzarConfeti(120);
+                sfxVictory();
+            }, 300);
+            setTimeout(() => lanzarConfeti(100), 1000);
+            setTimeout(() => lanzarConfeti(80), 1800);
+            setTimeout(() => {
+                [523, 659, 784, 1047, 1318].forEach((f, i) => {
+                    setTimeout(() => playTone(f, 0.2, 'sine', 0.12), i * 180);
+                });
+            }, 500);
+        }
+
+        // ---------- CONFETI ----------
+        function lanzarConfeti(cantidad = 80) {
+            const canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+            document.body.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const colores = ['#00ff6a', '#ffd54f', '#66bb6a', '#4fc3f7', '#ff6b6b', '#ff8800', '#ff00ff', '#00ccff'];
+            const particles = Array.from({ length: cantidad }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                w: 4 + Math.random() * 8,
+                h: 3 + Math.random() * 6,
+                color: colores[Math.floor(Math.random() * colores.length)],
+                vx: (Math.random() - 0.5) * 6,
+                vy: 1 + Math.random() * 5,
+                rot: Math.random() * 360,
+                rv: (Math.random() - 0.5) * 8
+            }));
+
+            function animar() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let vivo = false;
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rot += p.rv;
+                    p.vy += 0.06;
+                    if (p.y < canvas.height + 50) vivo = true;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (vivo) requestAnimationFrame(animar);
+                else canvas.remove();
+            }
+            animar();
+        }
+
+        // ---------- TIENDA ----------
+        function renderShop() {
+            const grid = $('shopGrid');
+            const items = [
+                { id: 'skin1', icon: '🦸‍♂️', nombre: 'Traje Élite', precio: 50, owned: game.skinsCompradas.includes(
+                    'skin1') },
+                { id: 'skin2', icon: '🧝‍♀️', nombre: 'Traje Místico', precio: 80, owned: game.skinsCompradas.includes(
+                    'skin2') },
+                { id: 'skin3', icon: '🤖', nombre: 'Traje Robot', precio: 100, owned: game.skinsCompradas.includes(
+                    'skin3') },
+                { id: 'poder1', icon: '⚡', nombre: 'Rayo Verde', precio: 60, owned: game.inventario.includes(
+                    'poder1') },
+                { id: 'poder2', icon: '🛡️', nombre: 'Escudo Bosque', precio: 70, owned: game.inventario.includes(
+                    'poder2') },
+                { id: 'poder3', icon: '💧', nombre: 'Lágrimas Agua', precio: 90, owned: game.inventario.includes(
+                    'poder3') }
+            ];
+            grid.innerHTML = items.map(item => `
+                <div class="shop-item ${item.owned ? 'owned' : ''}">
+                    <div class="icon">${item.icon}</div>
+                    <div class="name">${item.nombre}</div>
+                    <div class="price">${item.owned ? '✅ COMPRADO' : '🪙 ' + item.precio}</div>
+                    ${!item.owned ? `<button class="btn btn-primary btn-sm btn-buy" data-id="${item.id}" data-price="${item.precio}"><i class="fas fa-shopping-cart"></i> Comprar</button>` : ''}
+                </div>
+            `).join('');
+
+            grid.querySelectorAll('.btn-buy').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const price = parseInt(this.dataset.price);
+                    if (game.monedas >= price) {
+                        game.monedas -= price;
+                        if (id.startsWith('skin')) game.skinsCompradas.push(id);
+                        else game.inventario.push(id);
+                        sfxPower();
+                        renderShop();
+                        saveGame();
+                        $('mapCoins').textContent = game.monedas;
+                    } else {
+                        alert('¡No tienes suficientes monedas!');
+                    }
+                });
+            });
+        }
+
+        // ---------- HISTORIA ----------
+        const HISTORIA = [
+            { narrador: '📖 Narrador', avatar: '🌍', dialog: 'La Tierra estaba al borde del colapso. La contaminación, los incendios y la basura habían devastado el planeta.' },
+            { narrador: '🦸‍♂️ EcoGuardián', avatar: '🦸‍♂️', dialog: '¡No todo está perdido! Juntos podemos restaurar la naturaleza y devolver la vida al mundo.' },
+            { narrador: '🧟‍♂️ Contaminator', avatar: '🧟‍♂️', dialog: '¡Ja ja ja! Nunca podréis detenerme. La basura es mi poder y el caos mi reino.' },
+            { narrador: '🌍 Narrador', avatar: '🌍', dialog: 'Pero los Recycle Rangers no se rindieron. Con valentía y determinación, se enfrentaron al villano y limpiaron cada rincón del planeta.' },
+            { narrador: '🌟 Narrador', avatar: '🌟', dialog: 'Y así, la Tierra renació. Los árboles crecieron, los océanos se limpiaron y la vida volvió a florecer. ¡Gracias por ser parte de esta aventura!' }
+        ];
+
+        let historiaIndex = 0;
+
+        function mostrarHistoria() {
+            const paso = HISTORIA[historiaIndex];
+            if (!paso) { showScreen('map'); return; }
+            $('storyNarrator').textContent = paso.narrador;
+            $('storyAvatar').textContent = paso.avatar;
+            $('storyDialog').textContent = paso.dialog;
+            $('storyNextBtn').textContent = historiaIndex < HISTORIA.length - 1 ? '⏩ Siguiente' : '📖 Cerrar historia';
+        }
+
+        $('storyNextBtn').addEventListener('click', function() {
+            historiaIndex++;
+            if (historiaIndex >= HISTORIA.length) {
+                showScreen('map');
+                historiaIndex = 0;
+            } else {
+                mostrarHistoria();
+            }
+        });
+
+        // ---------- EVENTOS ----------
+        $('btnNewGame').addEventListener('click', () => {
+            if (confirm('¿Comenzar una nueva aventura? Se perderá el progreso actual.')) {
+                localStorage.removeItem('recycleRangersSave');
+                game.personajeId = 0;
+                game.monedas = 20;
+                game.puntuacion = 0;
+                game.nivel = 1;
+                game.experiencia = 0;
+                game.basuraEliminada = 0;
+                game.ciudadesSalvadas = 0;
+                game.nivelesCompletados = [];
+                game.inventario = [];
+                game.skinsCompradas = [];
+                game.vidas = 3;
+                game.nivelActual = 'bosque';
+                game.combo = 0;
+                game.maxCombo = 0;
+                game.logros = JSON.parse(JSON.stringify(ACHIEVEMENTS));
+                misionesDiarias = [
+                    { id: 'm1', desc: 'Responde 10 preguntas correctas', progreso: 0, max: 10, recompensa: 30,
+                        completada: false },
+                    { id: 'm2', desc: 'Gana 50 monedas', progreso: 0, max: 50, recompensa: 15, completada: false },
+                    { id: 'm3', desc: 'Completa 3 niveles', progreso: 0, max: 3, recompensa: 20, completada: false }
+                ];
+                NIVELES.forEach((n, i) => { n.bloqueado = i === 0 ? false : true;
+                    n.completado = false; });
+                showScreen('selectChar');
+                sfxButton();
+            }
+        });
+
+        $('btnContinue').addEventListener('click', () => {
+            if (loadGame()) {
+                showScreen('map');
+                renderMap();
+                sfxButton();
+                if (game.nivelesCompletados.length === NIVELES.length) {
+                    mostrarFinal();
+                }
+                iniciarMusica();
+            } else {
+                alert('No hay partida guardada. Comienza una nueva aventura.');
+            }
+        });
+
+        $('btnStartGame').addEventListener('click', () => {
+            if (!PERSONAJES[game.personajeId]) return;
+            game.vidas = 3 + PERSONAJES[game.personajeId].vidasExtra;
+            NIVELES.forEach((n, i) => { n.bloqueado = i === 0 ? false : true;
+                n.completado = false; });
+            game.nivelesCompletados = [];
+            game.nivelActual = 'bosque';
+            game.combo = 0;
+            game.maxCombo = 0;
+            game.logros = JSON.parse(JSON.stringify(ACHIEVEMENTS));
+            saveGame();
+            showScreen('map');
+            renderMap();
+            sfxButton();
+            iniciarMusica();
+        });
+
+        $('btnBackHome').addEventListener('click', () => { showScreen('home');
+            sfxButton(); });
+        $('btnShop').addEventListener('click', () => { showScreen('shop');
+            renderShop();
+            sfxButton(); });
+        $('btnStory').addEventListener('click', () => { historiaIndex = 0;
+            showScreen('story');
+            mostrarHistoria();
+            sfxButton(); });
+        $('btnHomeFromMap').addEventListener('click', () => {
+            if (confirm('¿Volver al inicio? Se perderá el progreso no guardado.')) {
+                showScreen('home');
+                sfxButton();
+                detenerMusica();
+                iniciarMusica();
+            }
+        });
+
+        $('btnBackMap').addEventListener('click', () => { showScreen('map');
+            renderMap();
+            sfxButton(); });
+        $('btnStoryBack').addEventListener('click', () => { showScreen('map');
+            renderMap();
+            sfxButton(); });
+        $('btnPlayAgain').addEventListener('click', () => {
+            localStorage.removeItem('recycleRangersSave');
+            location.reload();
+        });
+
+        $('btnAchievements').addEventListener('click', () => {
+            showScreen('achievements');
+            renderAchievements();
+            sfxButton();
+        });
+        $('btnAchievementsBack').addEventListener('click', () => {
+            showScreen('map');
+            renderMap();
+            sfxButton();
+        });
+
+        // ---------- INICIALIZAR ----------
+        initCharSelect();
+        showScreen('home');
+
+        document.addEventListener('click', () => {
+            initAudio();
+            if (!musicaActiva) iniciarMusica();
+        }, { once: true });
+
+        if (localStorage.getItem('recycleRangersSave')) {
+            $('btnContinue').style.display = 'inline-flex';
+        } else {
+            $('btnContinue').style.display = 'none';
+        }
+
+        console.log('🌍 RECYCLE RANGERS - Edición Definitiva');
+        console.log('✅ Eliminadas todas las pistas');
+        console.log('✅ Inicio épico con héroe gigante y partículas');
+        console.log('✅ Monedas con efecto 3D');
+        console.log('🎮 ¡Juego justo y espectacular!');
+    </script>
+
+</body>
+</html>
